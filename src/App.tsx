@@ -3,6 +3,7 @@ import { ThemeProvider, createMuiTheme,Switch, ThemeOptions,Paper, makeStyles, T
 import purple from '@material-ui/core/colors/purple';
 import green from '@material-ui/core/colors/green';
 import Header from './components/Header';
+import Products from './pages/Products';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,7 +50,8 @@ function App() {
           inputProps={{ 'aria-label': 'secondary checkbox' }}
         />
       </Header>
-      <Paper className={classes.paper}></Paper>
+      {/* <Paper className={classes.paper}></Paper> */}
+      <Products/>
     </ThemeProvider>
   );
 }
