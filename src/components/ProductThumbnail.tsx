@@ -6,9 +6,16 @@ import {
   Info,
   InfoEyebrow,
   InfoSlotStyles,
-  InfoSubtitle,
   InfoTitle,
-} from "/info-basic";
+} from "../mui-treasury/info-basic";
+
+// Define the type for the props
+interface ProductThumbnailProps {
+  name: string;
+  price: number;
+  imgUrl: string;
+  onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+}
 
 const useStyles = (): CSSObject & Partial<InfoSlotStyles> => {
   return {
@@ -27,13 +34,6 @@ const useStyles = (): CSSObject & Partial<InfoSlotStyles> => {
       fontWeight: "bold" as const,
       lineHeight: 1.2,
     },
-    subtitle: {
-      color: "rgba(255, 255, 255, 0.72)",
-      lineHeight: 1.5,
-      "&:last-child": {
-        marginTop: "1rem",
-      },
-    },
   };
 };
 
@@ -43,6 +43,7 @@ const StyledCard = styled(Card)({
   position: "relative",
   minWidth: 200,
   minHeight: 360,
+  cursor: "pointer",
   "&:after": {
     content: '""',
     display: "block",
@@ -73,21 +74,22 @@ const Content = styled("div")(({ theme }) => ({
   width: "100%",
 }));
 
-export function ProductThumbnail({name,price,imgUrl}) {
+// Use the defined props type in the component
+export const ProductThumbnail = React.memo(function GalaxyCard({
+  name,
+  price,
+  imgUrl,
+  onClick, // onClick를 props로 받아서 사용
+}: ProductThumbnailProps) {
   return (
-    <StyledCard>
-      <StyledCardMedia
-        image={
-          "https://image-us.samsung.com/SamsungUS/home/audio/galaxy-buds/MB-04-JustWhatYouWantV4.jpg?$cm-g-fb-full-bleed-img-mobile-jpg$"
-        }
-      />
+    <StyledCard onClick={onClick}> {/* 올바르게 onClick 사용 */}
+      <StyledCardMedia image={imgUrl} />
       <Content>
         <Info useStyles={useStyles}>
-          <InfoEyebrow>Galaxy</InfoEyebrow>
-          <InfoTitle>Buds 2019</InfoTitle>
-          <InfoSubtitle>Perfect for everyone</InfoSubtitle>
+          <InfoEyebrow>{name}</InfoEyebrow>
+          <InfoTitle>{price}</InfoTitle>
         </Info>
       </Content>
     </StyledCard>
   );
-}
+});
