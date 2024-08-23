@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { ThemeProvider, createMuiTheme,Switch, ThemeOptions,Paper, makeStyles, Theme, createStyles } from '@material-ui/core'
+import { ThemeProvider, createMuiTheme, Switch as MaterialSwitch, ThemeOptions, makeStyles, Theme, createStyles, Container } from '@material-ui/core';
 import purple from '@material-ui/core/colors/purple';
 import green from '@material-ui/core/colors/green';
 import Header from './components/Header';
 import Products from './pages/Products';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Cart from './pages/Cart';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,10 +32,10 @@ function App() {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsDark(event.target.checked);
-    setThemeOption((prev)=>({
+    setThemeOption((prev) => ({
       ...prev,
-      palette:{
-        type: event.target.checked? 'dark' : 'light',
+      palette: {
+        type: event.target.checked ? 'dark' : 'light',
       },
     }));
   };
@@ -42,19 +44,24 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header>
-        <Switch
-          checked={isDark}
-          onChange={handleChange}
-          name="checkedA"
-          inputProps={{ 'aria-label': 'secondary checkbox' }}
-        />
-      </Header>
-      {/* <Paper className={classes.paper}></Paper> */}
-      <Products/>
+        <Router>
+          <Header>
+            <MaterialSwitch
+              checked={isDark}
+              onChange={handleChange}
+              name="checkedA"
+              inputProps={{ 'aria-label': 'secondary checkbox' }}
+            />
+          </Header>
+          <Container maxWidth='lg'>
+            <Routes>
+              <Route path="/" element={<Products />} />
+              <Route path="/cart" element={<Cart />} />
+            </Routes>
+          </Container>
+        </Router>
     </ThemeProvider>
   );
 }
 
 export default App;
-

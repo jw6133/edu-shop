@@ -10,6 +10,7 @@ import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
 import { useReactiveVar } from '@apollo/client';
 import { cartItemsVar } from '../cache';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,11 +50,13 @@ export default function Header({ children }: Props) {
             News
           </Typography>
           {children}
-          <IconButton>
-            <Badge badgeContent={CartItems.length} color="primary">
-              <ShoppingCart color="action" />
-            </Badge>
-          </IconButton>
+          <Link to ='/cart'>
+            <IconButton>
+              <Badge badgeContent={CartItems.length} color="primary">
+                <ShoppingCart color="action" />
+              </Badge>
+            </IconButton>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>

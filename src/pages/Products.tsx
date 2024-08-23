@@ -12,12 +12,20 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const products = [...Array(10)].map(() => ({
-  name: "고구마",
-  price: 1000,
-  imgUrl:
-    "https://i.namu.wiki/i/9av_QFbUYY-0ehSj1q7UB6CDyQm54ele3wzy0vmUQaACwsKl7PKoZ6ivDViqdmNwcv0D0HPT0TPdxDk4n7RXZA.webp",
-}));
+const products = [...Array(5)].flatMap(() => [
+  {
+    id: "gogoo",
+    name: "고구마",
+    price: 1000,
+    imgUrl: "https://i.namu.wiki/i/9av_QFbUYY-0ehSj1q7UB6CDyQm54ele3wzy0vmUQaACwsKl7PKoZ6ivDViqdmNwcv0D0HPT0TPdxDk4n7RXZA.webp",
+  },
+  {
+    id : "potato",
+    name : "감자",
+    price : 2000,
+    imgUrl: "https://health.chosun.com/site/data/img_dir/2020/05/07/2020050702573_0.jpg",
+}
+]);
 
 export default function Products() {
   const classes = useStyles();
@@ -31,13 +39,13 @@ export default function Products() {
               onClick={() => {
                 const allCartItems = cartItemsVar();
                 cartItemsVar([
-                    ...allCartItems,
-                    {
-                      id: cuid(),
-                      product: { ...product, id: cuid() },  // Product의 price는 string 타입
-                      amount: 1,
-                    },
-                  ]);
+                  ...allCartItems,
+                  {
+                    id: cuid(),  // Unique ID for cart item
+                    product: product, // Corrected from props to product
+                    amount: 1,
+                  },
+                ]);
               }}
               name={product.name}
               price={product.price}
@@ -49,3 +57,4 @@ export default function Products() {
     </Container>
   );
 }
+ 
